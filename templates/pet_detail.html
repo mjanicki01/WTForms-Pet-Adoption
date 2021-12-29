@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Pet Detail{% endblock %}
+{% block content %}
+
+    <h1>Pet Detail</h1>
+
+    <div class = "pet-display-container">
+        <div class = "pet-child-container">
+            <img src = "{{pet.photo_url}}" width="300px">
+            <p><b>{{pet.name}}</b> is a {{pet.species}}
+                {%if pet.age %} and is {{pet.age}} years old
+                {% endif %}</p>
+            <p>They are
+                {%if pet.available is true %} available 
+                {% else %} not available 
+                {% endif %} for adoption</p>
+
+
+            <h3>Edit Details</h3>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {% for field in form if field.widget.input_type != 'hidden'%}
+                <p>
+                    {{field.label}}
+                    {{field}}
+            
+                    {% for err in field.errors %}
+                    {{err}}
+                    {% endfor %}
+                </p>
+                {% endfor %}
+                <button>Submit</button>
+            </form>
+            <p><a href="/">Go Back</a></p>
+        </div>
+    </div>
+
+{% endblock %}
+
+"""
+Display/Edit:
+/[pet-id-number] (post & get)
+Show:
+Pet name
+Species
+Photo URL
+Age
+
+Edit: (incl. form on page)
+Photo URL
+Notes
+Available
+"""
